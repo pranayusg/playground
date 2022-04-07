@@ -1,0 +1,23 @@
+<div class="drop-container">
+  <form novalidate [formGroup]="form">
+    <ng-multiselect-dropdown
+      formControlName="authorsFg"
+      [placeholder]="'Authors'"
+      [settings]="dropdownSettings"
+      [data]="dropdownList"
+      (onSelect)="onItemSelect($event)"
+    >
+    </ng-multiselect-dropdown>
+  </form>
+  <div class="action mt-3">
+    <button class="btn btn-primary" (click)="handleButtonClick()">
+      Search
+    </button>
+  </div>
+</div>
+
+<app-quotes
+  *ngIf="showQuotes"
+  [quoteType]="'Authors'"
+  [author]="searchedAuthor"
+></app-quotes>

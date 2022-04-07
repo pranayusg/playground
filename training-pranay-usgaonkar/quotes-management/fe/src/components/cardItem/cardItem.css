@@ -1,0 +1,28 @@
+.ant-card-meta-title {
+  white-space: pre-wrap;
+  font-style: italic;
+  font-size: 20px;
+  /* color: #413939; */
+}
+
+.ant-card-meta-description {
+  font-style: italic;
+  font-size: 17px;
+}
+
+.card-container {
+  width: 38%;
+  margin: 1.5%;
+  margin-left: 3%;
+  display: inline-block;
+}
+
+.icons {
+  font-size: 20px;
+}
+
+.like-dislike-value {
+  float: right;
+  position: relative;
+  right: 0.5%;
+}

@@ -1,0 +1,67 @@
+<!-- <pre>{{ quoteItem.quote }}</pre> -->
+<!-- <div class="card-container">
+  <div class="card">
+    <div class="card-header">
+      <img class="avatar" src="https://joeschmoe.io/api/v1/random" />
+      <div class="info">
+        <div class="row">
+          <p class="creator">{{ quoteItem.user.userName }}</p>
+          <div class="row moment-date"></div>
+          {{ quoteItem.user.created_at | amDateFormat: "LL" }}
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      {{ quoteItem.quote }}{{ quoteItem.author }}{{ quoteItem.tags }}
+    </div>
+    <div class="card-footer" *ngIf="isLoggedIn"></div>
+  </div>
+</div> -->
+
+<div class="card-container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-1 mr-0 pr-0">
+          <img class="avatar" src="https://joeschmoe.io/api/v1/random" />
+        </div>
+        <div class="col-md-3 ml-0 pl-0 info">
+          <p class="creator">{{ quoteItem.user.userName }}</p>
+          <div class="moment-date">
+            {{ quoteItem.user.created_at | amDateFormat: "LL" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="title">"{{ quoteItem.quote }}"</div>
+      <div id="author">{{ quoteItem.author }}</div>
+      <ul class="tag-list" *ngFor="let item of tags">
+        <li>{{ item }}</li>
+      </ul>
+    </div>
+    <div class="card-footer" *ngIf="isLoggedIn">
+      <div class="row">
+        <div class="col-md-6 icons">
+          <img
+            src="{{ likeImgSrc }}"
+            id="image-icons"
+            alt="logo"
+            (click)="onClickLike(quoteItem.id)"
+          />
+          {{ likeCount }}
+        </div>
+        <div class="col-md-6 icons">
+          <img
+            src="{{ disLikeImgSrc }}"
+            id="image-icons"
+            class="dislike-image"
+            alt="logo"
+            (click)="onClickDislike(quoteItem.id)"
+          />
+          {{ dislikeCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

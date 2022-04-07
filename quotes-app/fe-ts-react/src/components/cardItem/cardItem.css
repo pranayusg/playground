@@ -1,0 +1,90 @@
+.ant-card-meta-title {
+	white-space: pre-wrap;
+	font-style: italic;
+	font-size: 20px;
+	/* color: #413939; */
+}
+
+.ant-card-meta-description {
+	font-style: italic;
+	font-size: 17px;
+}
+
+.card-container {
+	margin: auto;
+	width: 70%;
+	margin-bottom: 0.5em;
+}
+
+.icons {
+	font-size: 15px;
+}
+
+.creator {
+	color: #5cb85c;
+	font-weight: 500 !important;
+}
+
+#image-icons {
+	width: 17px;
+	height: 2%;
+	margin-right: 30px;
+}
+
+.dislike-image {
+	transform: rotate(180deg);
+}
+
+/* .like-dislike-value {
+	float: right;
+	position: relative;
+	right: 7.6rem;
+} */
+
+.card-heading {
+	display: block;
+	position: relative;
+	font-weight: 300;
+	margin-bottom: 0.6rem;
+}
+
+.card-heading .info {
+	margin: 0 1.5rem 0 0.6rem;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 0.7rem;
+}
+
+.card-heading .info .moment-date {
+	color: #bbb;
+	font-size: 0.8rem;
+}
+
+ul.tag-list {
+	float: right;
+	max-width: 50%;
+	vertical-align: top;
+	margin-bottom: 1rem;
+	margin-top: 0.6em;
+}
+
+ul.tag-list li {
+	display: inline-block !important;
+	border: 1px solid #ddd;
+	color: #aaa !important;
+	background: 0 0 !important;
+	font-weight: 300;
+	font-size: 0.8rem !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	padding-right: 0.6em;
+	padding-left: 0.6em;
+	border-radius: 10rem;
+	margin-right: 3px;
+	margin-bottom: 0.2rem;
+	white-space: nowrap;
+}
+
+/* .ant-card {
+	border-bottom-color: rgb(75, 74, 74);
+} */

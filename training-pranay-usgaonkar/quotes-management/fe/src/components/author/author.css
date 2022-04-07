@@ -1,0 +1,9 @@
+.ant-list-item-meta-title {
+  font-style: italic;
+  font-size: 120%;
+  color: #f71111;
+  background-color: rgb(228, 223, 178);
+  width: 50%;
+  /* width: 70%; */
+  display: inline-block;
+}

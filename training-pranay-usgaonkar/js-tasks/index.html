@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+
+       <!-- Required meta tags -->
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+       <!-- Bootstrap CSS -->
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+       
+    <title>JavaScript Starter Code</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+.tabcontent {
+  display: none;
+}
+</style>
+
+<body>
+    <div class="jumbotron jumbotron-fluid bg-dark text-white">
+        <div class="container">
+    <p align="center" class="pt-3">
+        <a href="http://nestjs.com/" target="blank"><img src="./assets/logo.svg" width="380"
+                alt="creativecapsule Logo" /></a>
+    <h1 class="display-6 text-center pb-4">Developer's Training Program 2021</h1>
+    </p>
+        </div>
+    </div>
+
+
+    <div class="container">
+    <!-- <h2 class="pb-3">Developer's Training Program 2021</h2> -->
+    <!-- <hr> -->
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link" onclick="openSection(event, 'Section1')">Section 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  onclick="openSection(event, 'Section2')">Section 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  onclick="openSection(event, 'Section3')">Section 3</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  onclick="openSection(event, 'Section4')">Section 4</a>
+          </li>
+      </ul>
+
+    <!-- <h1>Section 1</h1> -->
+
+    <div id="Section1" class="tabcontent">
+
+    <h4><strong>T1:</strong> Calculate Age in Days</h4>
+    <input id="t1-input" />
+    <input type="button" class="btn btn-primary"  onClick="getAgeInDays()" value="Age to days">
+    <div id='t1-result'></div>
+    <hr>
+
+    <h4><strong>T2:</strong> Calculate Age in Secs</h4>
+    <input id="t2-input" />
+    <input type="button" class="btn btn-primary" onClick="getAgeInSecs()" value="Age to secs">
+    <div id='t2-result'></div>
+    <hr>
+
+    <h4><strong>T3:</strong> Buggy Code</h4>
+    <input id="t3-input" />
+    <input type="button" class="btn btn-primary" onClick="getCube()" value="No to its cube">
+    <div id='t3-result'></div>
+    <hr>
+
+    <h4><strong>T4:</strong> Reverse String</h4>
+    <input id="t4-input" />
+    <input type="button" class="btn btn-primary" onClick="reverseInputString()" value="Reverse String">
+    <div id='t4-result'></div>
+    <hr>
+
+    <h4><strong>T5:</strong> Sum of 2 Numbers</h4>
+    <input id="t5-input1" placeholder="Comma separated array" />
+    <input id="t5-input2" placeholder="Target"/>
+    
+    <input type="button" class="btn btn-primary" onClick="sumOfTwoNums()" value="Get indices">
+    <div id='t5-result'></div>
+    <hr>
+
+    </div>
+
+    <!-- <h1>Section 2</h1> -->
+
+    <div id="Section2" class="tabcontent">
+    <h4><strong>T6:</strong> Secs in Hours </h4>
+    <input id="t6-input" />
+    <input type="button" class="btn btn-primary" onClick="secsInHours()" value="Get secs in hours">
+    <div id='t6-result'></div>
+    <hr>
+
+    <h4><strong>T7:</strong> Deck of Cards game</h4>
+    <input type="button" class="btn btn-primary" onClick="makeDeal()" value="Deal">
+    <input type="button" class="btn btn-primary" onClick="reset()" value="Reset cards">
+    <pre id='t7-result'></pre>
+    <hr>
+
+    <h4><strong>T8:</strong>Number exists in array</h4>
+    <input id="t8-input1" placeholder="Comma separated array1" />
+    <input id="t8-input2" placeholder="Comma separated array2"/>
+    <input id="t8-input3" placeholder="Num to check"/>
+    
+    <input type="button" class="btn btn-primary" onClick="numExistsInArray()" value="Check if num exists">
+    <div id='t8-result'></div>
+    <hr>
+
+    <h4><strong>T9:</strong> Get unique and duplicate characters in a string</h4>
+    <input id="t9-input" />
+    <input type="button" class="btn btn-primary" onClick="analyzeString()" value="Analyze String">
+    <pre id='t9-result'></pre>
+    <hr>
+
+    <h4><strong>T10:</strong> Get keys from JSON</h4>
+    <input id="t10-input" />
+    <input type="button" class="btn btn-primary" onClick="analyzeJson()" value="Analyze JSON">
+    <pre id='t10-result'></pre>
+    <hr>
+
+    </div>
+
+    <div id="Section3" class="tabcontent">
+    <!-- <h1>Section 3</h1> -->
+
+    <h4><strong>T11:</strong>Equilibrium</h4>
+    <input id="t11-input" />
+    <input type="button" class="btn btn-primary" onClick="equilibriumIndex()" value="Get equilibrium index">
+    <div id='t11-result'></div>
+    <hr>
+
+    <h4><strong>T12:</strong> Format Date</h4>
+    <input id="t12-input" />
+    <input type="button" class="btn btn-primary" onClick="formatDate()" value="Get Formated Date">
+    <div id='t12-result'></div>
+    <hr>
+
+    <h4><strong>T13:</strong> Sentence Value</h4>
+    <input id="t13-input" />
+    <input type="button" class="btn btn-primary" onClick=" sentenceValue()" value="Get Sentence Value">
+    <div id='t13-result'></div>
+    <hr>
+
+    <h4><strong>T14:</strong>Analyze Student Names</h4>
+    <input id="t14-input" placeholder="Comma separated names array " />
+    
+    <input type="button" class="btn btn-primary" onClick="analyzeStudentNames()" value="Get results">
+    <pre id='t14-result'></pre>
+    <hr>
+
+    <h4><strong>T15:</strong>Largest Palindrome Product of two 3-digit numbers</h4>
+    <input type="button" class="btn btn-primary" onClick="largestPalindrome()" value="Get Palindrome">
+    <div id='t15-result'></div>
+    <hr>
+
+    <h4><strong>T16:</strong>Extracting words with "ing" Inflection</h4>
+    <input id="t16-input" />
+    <input type="button" class="btn btn-primary" onClick="extractWords()" value="Extract words">
+    <div id='t16-result'></div>
+    <hr>
+
+    </div>
+
+    <div id="Section4" class="tabcontent">
+    <!-- <h1>Section 4</h1> -->
+
+    <h4><strong>T17:</strong>Check Palindrome</h4>
+    <input id="t17-input" />
+    <input type="button" class="btn btn-primary" onClick="checkPalindrome()" value="Check Palindrome">
+    <div id='t17-result'></div>
+    <hr>
+
+    <h4><strong>T18:</strong> Vowels in a string</h4>
+    <input id="t18-input" />
+    <input type="button" class="btn btn-primary" onClick="checkVowels()" value="Vowels count">
+    <div id='t18-result'></div>
+    <hr>
+
+    <h4><strong>T19:</strong> Remove duplicates from an array</h4>
+    <input id="t19-input" />
+    <input type="button" class="btn btn-primary" onClick="removeDuplicates()" value="Remove duplicates">
+    <pre id='t19-result'></pre>
+    <hr>
+
+    <h4><strong>T20:</strong> UNIQUE CHARACTERS IN A GIVEN SENTENCE</h4>
+    <input id="t20-input" />
+    <input type="button" class="btn btn-primary" onClick="uniqueCharacters()" value="Get Unique Characters">
+    <pre id='t20-result'></pre>
+    <hr>
+
+    <h4><strong>T21:</strong>  GET THE 1ST N PRIME NUMBERS</h4>
+    <input id="t21-input" />
+    <input type="button" class="btn btn-primary" onClick="primeNumbers()" value="Get Prime Numbers">
+    <pre id='t21-result'></pre>
+    <hr>
+
+    <h4><strong>T22:</strong> CONVERT INT TO BINARY NUMBER.</h4>
+    <input id="t22-input" />
+    <input type="button" class="btn btn-primary" onClick="convertIntToBinary()" value="Convert">
+    <div id='t22-result'></div>
+    <hr>
+
+    <h4><strong>T23:</strong> Sum of all the multiples of 3 or 5</h4>
+    <input id="t23-input" />
+    <input type="button" class="btn btn-primary" onClick="getSumOfMultipleOf3and5()" value="Get sum">
+    <div id='t23-result'></div>
+    <hr>
+
+    <h4><strong>T24:</strong> : SUM OF EVEN FIBONACCI NUMBERS</h4>
+    <input id="t24-input" />
+    <input type="button" class="btn btn-primary" onClick="getSumOfEvenFibo()" value="Get sum">
+    <div id='t24-result'></div>
+    <hr>
+
+    <h4><strong>T25:</strong> Get doors which are open among 100 DOORS after 100th pass</h4>
+    <input type="button" class="btn btn-primary" onClick="hundredDoors()" value="Get open doors">
+    <div id='t25-result'></div>
+    <hr>
+
+    <h4><strong>T26:</strong>  PRISONERS</h4>
+    <input id="t26-input" placeholder="Enter n,k"/>
+    <input type="button" class="btn btn-primary" onClick="prisonars()" value="Get last person executed">
+    <div id='t26-result'></div>
+    <hr>
+
+    </div>
+    
+    <script type = "text/JavaScript" src = " https://MomentJS.com/downloads/moment.js"></script>
+
+    <script src="src/section_1/task_1_ageToDays.js"></script>
+    <script src="src/section_1/task_2_ageToSecs.js"></script>
+    <script src="src/section_1/task_3_buggyCode.js"></script>
+    <script src="src/section_1/task_4_reverseString.js"></script>
+    <script src="src/section_1/task_5_sumOfTwoNums.js"></script>
+    <script src="src/section_2/task_6_secsInHour.js"></script>
+    <script src="src/section_2/task_7_deckOfCards.js"></script>
+    <script src="src/section_2/task_8_noExistsInArray.js"></script>
+    <script src="src/section_2/task_9_analyzeString.js"></script>
+    <script src="src/section_2/task_10_analyzeJson.js"></script>
+    <script src="src/section_3/task_11_equilibrium.js"></script>
+    <script src="src/section_3/task_12_formatDate.js"></script>
+    <script src="src/section_3/task_13_sentenceValue.js"></script>
+    <script src="src/section_3/task_14_analyzeNames.js"></script>
+    <script src="src/section_3/task_15_palindrome .js"></script>
+    <script src="src/section_3/task_16_wordChallenge.js"></script>
+    <script src="src/section_4/task_17_checkPalindrome.js"></script>
+    <script src="src/section_4/task_18_vowelsCount.js"></script>
+    <script src="src/section_4/task_19_duplicateArray.js"></script>
+    <script src="src/section_4/task_20_uniqueCharacters.js"></script>
+    <script src="src/section_4/task_21_primeNos.js"></script>
+    <script src="src/section_4/task_22_intToBinary.js"></script>
+    <script src="src/section_4/task_23_multiplesOf.js"></script>
+    <script src="src/section_4/task_24_evenFibonacciNos.js"></script>
+    <script src="src/section_4/task_25_11Doors.js"></script>
+    <script src="src/section_4/task_26_prisonars.js"></script>
+ 
+
+    <script>
+        function openSection(evt, section) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace("nav-link active", "nav-link");
+            }
+            document.getElementById(section).style.display = "block";
+
+            evt.currentTarget.className = "nav-link active";
+        }
+
+        function getAgeInDays() {
+            var data = document.getElementById("t1-input").value;
+            var result = ageToDays(data);
+            document.getElementById("t1-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function getAgeInSecs() {
+            var data = document.getElementById("t2-input").value;
+            var result = ageToSecs(data);
+            document.getElementById("t2-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function getCube() {
+            var data = document.getElementById("t3-input").value;
+            var result = cubes(data);
+            document.getElementById("t3-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function reverseInputString() {
+            var data = document.getElementById("t4-input").value;
+            var result = reverseString(data);
+            document.getElementById("t4-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function sumOfTwoNums() {
+            var input_array = document.getElementById("t5-input1").value;
+            var input_target = document.getElementById("t5-input2").value;
+            var result = getIndices(input_array,Number(input_target));
+            document.getElementById("t5-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function secsInHours() {
+            var data = document.getElementById("t6-input").value;
+            var result = getSecsInHours(data);
+            document.getElementById("t6-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function numExistsInArray() {
+            var input_array1 = document.getElementById("t8-input1").value;
+            var input_array2 = document.getElementById("t8-input2").value;
+            var input_number  = document.getElementById("t8-input3").value;
+            var result = checkIfNoExistsInArray(input_array1,input_array2,Number(input_number));
+            document.getElementById("t8-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+       
+        function analyzeString() {
+            var data = document.getElementById("t9-input").value;
+            var result = getAnalyzedString(data);
+            document.getElementById("t9-result").innerHTML = JSON.stringify(result,null, 4);
+        }
+
+        function analyzeJson() {
+            var data = document.getElementById("t10-input").value;
+            var result = getJsonKeys(data);
+            document.getElementById("t10-result").innerHTML = result;
+        }
+
+        function equilibriumIndex() {
+            var data = document.getElementById("t11-input").value;
+            var result = solution(data);
+            document.getElementById("t11-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function analyzeJson() {
+            var data = document.getElementById("t10-input").value;
+            var result = getJsonKeys(data);
+            document.getElementById("t10-result").innerHTML = result;
+        }
+
+        function makeDeal() {
+            var result =deal();
+            document.getElementById("t7-result").innerHTML = JSON.stringify(result,null, 4);
+        }
+        
+        function reset() {
+            resetCards();
+        }
+
+        function formatDate() {
+            var data = document.getElementById("t12-input").value;
+            var result = getFormatedDate(data);
+            document.getElementById("t12-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        
+        function sentenceValue() {
+            var data = document.getElementById("t13-input").value;
+            var result = getSentenceValue(data);
+            document.getElementById("t13-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function analyzeStudentNames() {
+            var data = document.getElementById("t14-input").value;
+            var result = getAnalyzedStudentNames(data);
+            document.getElementById("t14-result").innerHTML = JSON.stringify(result,null, 4);
+        }
+
+        function largestPalindrome(){
+            var result = getLargestPallindrome();
+            document.getElementById("t15-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function extractWords() {
+            var data = document.getElementById("t16-input").value;
+            var result = ingExtractor(data);
+            document.getElementById("t16-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function checkPalindrome() {
+            var data = document.getElementById("t17-input").value;
+            var result = isPalindrome(data);
+            document.getElementById("t17-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+
+        function  checkVowels(){
+            var data = document.getElementById("t18-input").value;
+            var result = countVowels(data);
+            document.getElementById("t18-result").innerHTML = "<strong>Result:</strong>" + result;
+        }
+        
+        function removeDuplicates(){
+            var data = document.getElementById("t19-input").value;
+            var result = getDuplicates(data);
+            document.getElementById("t19-result").innerHTML = "<strong>Unique array:</strong><br>" +JSON.stringify(result,null, 4);
+        }
+
+
+        function uniqueCharacters(){
+            var data = document.getElementById("t20-input").value;
+            var result = getUniqueCharacters(data);
+            document.getElementById("t20-result").innerHTML ="<strong>Result:</strong><br>" + JSON.stringify(result,null, 4);;
+        }
+
+        function primeNumbers(){
+            var data = document.getElementById("t21-input").value;
+            var result = getPrimeNumbers(data);
+            document.getElementById("t21-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+
+        function convertIntToBinary(){
+            var data = document.getElementById("t22-input").value;
+            var result = convertToBinary(data);
+            document.getElementById("t22-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+
+        function getSumOfMultipleOf3and5(){
+            var data = document.getElementById("t23-input").value;
+            var result = multipleOf3and5(data);
+            document.getElementById("t23-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+
+        function getSumOfEvenFibo() {
+            var data = document.getElementById("t24-input").value;
+            var result = fiboEvenSum(data);
+            document.getElementById("t24-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+
+        function hundredDoors() {
+            var result = getOPenDoors();
+            document.getElementById("t25-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+        
+        function prisonars() {
+            var data = document.getElementById("t26-input").value;
+             
+            var result = find_last_executed(data.split(',')[0],data.split(',')[1]);
+            document.getElementById("t26-result").innerHTML ="<strong>Result:</strong>" + result;
+        }
+        
+        
+    </script>
+</body>
+
+</html>

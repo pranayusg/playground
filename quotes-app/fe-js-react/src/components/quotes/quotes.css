@@ -1,0 +1,14 @@
+.card-container-parent {
+	margin: auto;
+	width: 90%;
+	/* border: 3px solid green; */
+}
+
+.ant-pagination {
+	margin: auto;
+	width: 50%;
+}
+
+.pagination-parent {
+	margin-top: 4%;
+}

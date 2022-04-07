@@ -1,0 +1,7 @@
+.accordionSpacing.panel-group .panel + .panel {
+  margin-top: 25px; /* solution with margins */
+}
+
+.morePadding {
+  padding-bottom: 10px; /* solution with paddings */
+}

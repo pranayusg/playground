@@ -1,0 +1,111 @@
+https://www.pluralsight.com/courses/angular-2-getting-started-update
+https://github.com/DeborahK/Angular-GettingStarted
+
+1 UI (Understand the Angular Project structure,various files and  what it does,Angular CLI)
+
+So till now I have explored about 
+
+2 Components,Modules, Decorators @Component , Binding  - Interpolation,Property Binding,Event Binding,2 way binding [(ngModel)]  ,Structural Directives *ngIf, *ngFor ,bootstrap applied
+
+2 way binding [(ngModel)]
+Getter and setters functions
+template to component
+
+Event Binding, Show Image,2 way binding [(ngModel)]
+Pipes,Custome Pipes (Transform data before showing in UI)
+Improving Components - 
+		Interface- As a type and Feature set , class implements interface
+		StyleUrls
+
+Lifecycle Hooks-ngOnInit,ngOnChange,ngOnDestroy
+Nested Components
+
+
+Services,Dependency Injection(Use constructors to inject dependency)
+RxJs,observables ,subsribe , unsubscribe
+
+
+Next is Angular Modules
+More on RxJs and observables
+
+ngb
+bootsrap 3
+
+https://ng-bootstrap.github.io/#/components/timepicker/examples
+
+
+
+1 Restructre Project with individual modules(App Module,Feature Module ,Shared Module)
+
+RXJS
+2 using Subject and takeuntil to unsubscribe
+	https://medium.com/angular-in-depth/the-best-way-to-unsubscribe-rxjs-observable-in-the-angular-applications-d8f9aa42f6a0
+	https://blog.bitsrc.io/6-ways-to-unsubscribe-from-observables-in-angular-ab912819a78f
+	
+	
+ROUTING
+
+Routing and navigation
+Configure routes (app module)
+
+Invoke from navigation
+app html nav  </router-outlet> where we want the component to be displayed
+
+If we want to invoke route from code then we use [routerLink] and navigate back
+
+Passing Parameters in routes and accessing them
+Guards
+	
+3 Pass object between components 
+	Through query params,Through route state,through Required Route params in url
+	Parent to child ,Child to parent (star component)
+	https://medium.com/ableneo/how-to-pass-data-between-routed-components-in-angular-2306308d8255
+	https://levelup.gitconnected.com/5-ways-to-share-data-between-angular-components-d656a7eb7f96
+4 Prefetching data using Resolvers (Product details page)
+  If correct id is passed ,rseolvers will run 1st and then page will be loaded with small delay but with fetched data
+  If string is passed Route guards will get activated
+  If BE returned error ,then error handling will be shown on the page
+5 Lazy Loading
+	File bundles are downloaded only when we need it and not everytime ,to speedup initial start time
+	Prerequisites - Declare Components in module, Specify path as parent and children,Remove Products module from App Mod
+   
+
+FORMS (Angular Reactive Forms by Deborah Kurata)
+
+Template-driven Form
+
+Reactive form
+Module imports,-ReactiveFormsModule
+Formconcontrol,
+formbuilder,
+populateTestData setValue(To set all values),patchValue(To set partial form values) -(populateTestData)
+
+
+Validators
+built in validators,
+adjusting Validators at run time (Send notification) (click)="setNotification(email)" on form but chnaged to Watching and Reacting to changes (Phone)
+Custom validators (ratingRange)
+Cross Field validator (emailMatcher)
+
+Watch and Reacting to changes
+Adjusting Validation-(ngOnInit setNotification) valueChanges property and then subscribe
+Displaying Validation Messages- (check where emailMessage is used)
+Reactive Transformation (Debounce time)- Show validation message only after 1000 millisec has passed
+
+Dynamically Duplicate Input elements
+Search adrresses and check
+Form Array
+
+Add and Edit Product
+Add route configuration
+CanDeactivate Guard- When navgating away from route after changing values
+Move validator in a separate file -class
+
+CRUD 
+API
+
+Accordion table
+https://codepen.io/jopico/pen/kyRprJ
+
+Things to do
+RxJs

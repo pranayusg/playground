@@ -1,0 +1,100 @@
+.card-container {
+  margin: auto;
+  width: 70%;
+  margin-bottom: 0.5em;
+}
+
+.card-header .info {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0.7rem;
+}
+
+.creator {
+  color: #5cb85c;
+  font-weight: 500 !important;
+}
+
+.card-header {
+  /* display: block;
+	position: relative; */
+
+  margin-bottom: 0.6rem;
+}
+
+.info {
+  color: #bbb !important;
+  font-size: 0.8rem !important;
+}
+
+.moment-date {
+  font-weight: 500;
+}
+
+.avatar {
+  width: 25px;
+}
+
+/* .card-body {
+  margin: auto;
+  width: 80%;
+  text-align: center !important;
+} */
+
+#title {
+  white-space: pre-wrap;
+  font-style: italic;
+  font-size: 20px;
+  text-align: center;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+}
+
+#author {
+  font-style: italic;
+  font-size: 17px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+ul.tag-list {
+  float: right;
+  max-width: 50%;
+  vertical-align: top;
+  margin-bottom: 1rem;
+  margin-top: 0.6em;
+}
+
+ul.tag-list li {
+  display: inline-block !important;
+  border: 1px solid #ddd;
+  color: #aaa !important;
+  background: 0 0 !important;
+  font-weight: 300;
+  font-size: 0.8rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
+  margin-right: 3px;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+}
+
+#image-icons {
+  width: 17px;
+
+  /* height: 2%;*/
+  margin-right: 25px;
+}
+
+.icons {
+  margin: auto;
+  width: 20%;
+}
+
+.dislike-image {
+  transform: rotate(180deg);
+}

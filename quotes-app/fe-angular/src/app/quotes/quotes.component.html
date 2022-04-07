@@ -1,0 +1,12 @@
+<!-- <p>{{ quoteType }}</p> -->
+
+<div
+  class="card-container-parent"
+  *ngFor="let item of quotesData; let i = index"
+>
+  <app-card-item
+    [quoteItem]="item"
+    [isLiked]="isLiked(item.id)"
+    [isDisliked]="isDisliked(item.id)"
+  ></app-card-item>
+</div>

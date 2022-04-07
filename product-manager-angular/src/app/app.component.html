@@ -1,0 +1,22 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <a class="navbar-brand">{{ title }} </a>
+    <ul class="nav nav-pills">
+      <li>
+        <a class="nav-link" routerLink="/welcome">Home </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/products">Product List </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/products/0/edit">Add Product </a>
+      </li>
+
+      <li>
+        <a class="nav-link" routerLink="/form">Form Demo </a>
+      </li>
+    </ul>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>

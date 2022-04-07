@@ -1,0 +1,25 @@
+.logo {
+  color: #5cb85c;
+}
+
+.jumbotron {
+  background-color: #5cb85c;
+}
+
+.content {
+  padding: 1%;
+  color: white;
+  text-align: center;
+}
+
+.jumbotron-heading {
+  color: white;
+  font-weight: 700 !important;
+  font-size: 2.2rem;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+}
+
+.jumbotron-content {
+  font-size: 1.3em;
+  font-family: "Times New Roman", Times, serif;
+}

@@ -1,0 +1,16 @@
+{
+	"name": "js-starter-code",
+	"version": "1.0.0",
+	"description": "JS Starter Code",
+	"main": "main.js",
+	"scripts": {
+		"start": "lite-server",
+		"test": "jest --watchAll"
+	},
+	"author": "Ivo Costa",
+	"company": "CreativeCapsule",
+	"dependencies": {
+		"jest": "^27.3.1",
+		"lite-server": "^2.6.1"
+	}
+}

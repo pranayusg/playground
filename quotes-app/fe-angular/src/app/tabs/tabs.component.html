@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row m-2">
+    <div class="col-sm-8">
+      <!-- <pre>Active: {{ active }}</pre> -->
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="active"
+        (navChange)="onNavChange()"
+        class="nav-tabs"
+      >
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Quotes</a>
+          <ng-template ngbNavContent>
+            <app-quotes [quoteType]="'All'"></app-quotes>
+          </ng-template>
+        </li>
+        <li *ngIf="isLoggedIn" [ngbNavItem]="2">
+          <a ngbNavLink>Author</a>
+          <ng-template ngbNavContent>
+            <app-author></app-author>
+          </ng-template>
+        </li>
+        <li *ngIf="showTagTab" [ngbNavItem]="3">
+          <a ngbNavLink>#{{ tagTab }}</a>
+          <ng-template ngbNavContent>
+            <app-quotes [quoteType]="'Tag'" [tag]="tagTab"></app-quotes>
+          </ng-template>
+        </li>
+        <li *ngIf="isLoggedIn" [ngbNavItem]="4">
+          <a ngbNavLink>Users</a>
+          <ng-template ngbNavContent>
+            <app-accordian-authors></app-accordian-authors>
+            <!-- <app-quotes [quoteType]="'Tag'" [tag]="tagTab"></app-quotes> -->
+          </ng-template>
+        </li>
+        <li *ngIf="isLoggedIn" [ngbNavItem]="5">
+          <a ngbNavLink>Charts</a>
+          <ng-template ngbNavContent>
+            <app-charts></app-charts>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+    <div class="col-sm-4">
+      <app-tags (tagClicked)="onTagClicked($event)"></app-tags>
+      <!-- <Tags displayTagTab={displayTagTab} />
+            {auth.isLoggedIn() && <Authors displayAuthorTab={displayAuthorTab} />} -->
+    </div>
+  </div>
+</div>

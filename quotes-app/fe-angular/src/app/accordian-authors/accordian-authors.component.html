@@ -1,0 +1,75 @@
+<!-- <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+  <ngb-panel title="Quotes by author">
+    <ng-template ngbPanelContent>
+      <div *ngFor="let author of authors">
+        <a
+          style="cursor: pointer; text-decoration: none"
+          class="link-primary"
+          (click)="open(content, $event.target)"
+        >
+          {{ author }}</a
+        >
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion> -->
+<div>
+  <h4>Accordians for users</h4>
+  <ngb-accordion #acc="ngbAccordion" *ngFor="let user of users">
+    <ngb-panel title="{{ user.name }}">
+      <ng-template ngbPanelContent>
+        <ng-container
+          *ngFor="let quote of user.quotes"
+          style="margin-bottom: 20px"
+        >
+          <a
+            style="cursor: pointer; text-decoration: none; display: block"
+            class="link-primary"
+            (click)="open(content, $event.target)"
+          >
+            {{ quote.author.trim() }}</a
+          >
+        </ng-container>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+
+<div style="margin-top: 50px">
+  <h4>SearchBox for author</h4>
+  <ngb-accordion #acc="ngbAccordion" style="margin-top: 50px">
+    <ngb-panel title="Search Author">
+      <ng-template ngbPanelContent>
+        <ng-container>
+          <!-- <label for="typeahead-basic">Search for a state:</label> -->
+          <input
+            id="typeahead-basic"
+            type="text"
+            class="form-control"
+            style="margin: auto; width: 80%; margin-bottom: 20px"
+            [(ngModel)]="model"
+            [ngbTypeahead]="search"
+            (click)="onselect($event.target)"
+          />
+
+          <app-quotes [quoteType]="'Authors'" [author]="model"></app-quotes>
+        </ng-container>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Display quote by author</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-quotes [quoteType]="'Authors'" [author]="searchedAuthor"></app-quotes>
+  </div>
+</ng-template>

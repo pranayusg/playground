@@ -1,0 +1,114 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Sign In</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form novalidate (ngSubmit)="save(signinForm)" #signinForm="ngForm">
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="emailId">Email</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="emailId"
+            type="email"
+            placeholder="Email (required)"
+            required
+            email
+            [(ngModel)]="userSignIn.email"
+            name="email"
+            #emailVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (emailVar.touched || emailVar.dirty) && !emailVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="emailVar.errors?.['required']">
+              Please enter your email address.
+            </span>
+            <span *ngIf="emailVar.errors?.['email']">
+              Please enter a valid email address.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="passwordId">Password</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="passwordId"
+            type="password"
+            placeholder="Password (required)"
+            required
+            minlength="4"
+            [(ngModel)]="userSignIn.password"
+            name="password"
+            #passwordVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="passwordVar.errors?.['required']">
+              Please enter password.
+            </span>
+            <span *ngIf="passwordVar.errors?.['minlength']">
+              The password must be greater then 4 characters.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-3 mt-4">
+        <div class="col-md-12" style="float: right; margin: auto; width: 50%">
+          <button
+            class="btn btn-secondary mr-3"
+            style="width: 80px; margin-right: 5px"
+            (click)="resetForm(signinForm)"
+          >
+            Reset
+          </button>
+
+          <button
+            class="btn btn-success mr-3"
+            type="submit"
+            style="width: 80px"
+            [title]="
+              signinForm.valid
+                ? 'Save your entered data'
+                : 'Disabled until the form data is valid'
+            "
+            [disabled]="!signinForm.valid"
+          >
+            Sign in
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Save
+      </button>
+    </div> -->
+</ng-template>
+
+<a style="margin: 20; margin-left: 3%; cursor: pointer" (click)="open(content)">
+  <!-- <UserAddOutlined /> -->
+  Sign in
+</a>
+
+<!-- <pre>{{ closeResult }}</pre> -->

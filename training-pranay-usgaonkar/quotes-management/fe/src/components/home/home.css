@@ -1,0 +1,9 @@
+.ant-layout-header {
+  position: relative;
+  display: flex;
+  padding-right: 8px;
+}
+
+h2 {
+  padding-right: 10px;
+}

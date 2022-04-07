@@ -1,0 +1,33 @@
+<div *ngIf="!isLoggedIn">
+  <div class="container">
+    <div class="row m-2">
+      <div class="col-sm-8">
+        <h5 class="logo">QuotesApp</h5>
+      </div>
+      <div class="col-sm-4">
+        <app-signup></app-signup>
+        <app-signin></app-signin>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <div class="content">
+        <h2 class="jumbotron-heading">QuotesApp</h2>
+        <p class="jumbotron-content">A place to share your favourite quotes.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoggedIn" class="container">
+  <div class="row m-2">
+    <div class="col-sm-8">
+      <h5 class="logo">QuotesApp</h5>
+    </div>
+    <div class="col-sm-4">
+      <app-new-quote-modal></app-new-quote-modal>
+      <app-user-menu></app-user-menu>
+    </div>
+  </div>
+</div>

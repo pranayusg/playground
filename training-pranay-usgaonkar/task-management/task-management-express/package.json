@@ -1,0 +1,29 @@
+{
+	"name": "code-crunch",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"project-bootstrap": "npx sequelize-cli init",
+		"make-model": "npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string",
+		"make-seed": "npx sequelize-cli seed:generate --name demo-usersequelize seed:generate --name demo-user",
+		"migrate": "npx sequelize-cli db:migrate",
+		"down": "npx sequelize-cli db:migrate:undo",
+		"seed": "npx sequelize-cli db:seed:all",
+		"undo-seed": "npx sequelize-cli db:seed:undo",
+		"undo-seed-all": "npx sequelize-cli db:seed:undo:all",
+		"start": "npx nodemon server.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"morgan": "^1.10.0",
+		"pg": "^8.7.1",
+		"sequelize": "^6.8.0",
+		"sequelize-cli": "^6.2.0"
+	}
+}

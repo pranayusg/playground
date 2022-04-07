@@ -1,0 +1,13 @@
+<div class="sidebar">
+  <p>Popular Tags</p>
+  <div class="tag-list" *ngFor="let item of tagsData; let i = index">
+    <a
+      tabindex="{{ i }}"
+      role="button"
+      class="tag-pill"
+      (click)="onTagClick($event.target)"
+    >
+      {{ item }}
+    </a>
+  </div>
+</div>

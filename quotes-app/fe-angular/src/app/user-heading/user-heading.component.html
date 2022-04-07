@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row m-2">
+    <div class="col-sm-8">
+      <h5 class="logo">QuotesApp</h5>
+    </div>
+    <div class="col-sm-4">
+      <a
+        style="margin: 20; margin-left: 3%"
+        type="primary"
+        role="button"
+        (click)="goToHome()"
+      >
+        Home
+      </a>
+      <app-user-settings></app-user-settings>
+      <a
+        style="margin: 20; margin-left: 3%"
+        type="primary"
+        role="button"
+        (click)="logOut()"
+      >
+        Log out
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="user-jumbotron">
+    <div class="user-content">
+      <img
+        src="https://api.realworld.io/images/smiley-cyrus.jpeg"
+        class="user-img"
+        alt="user-img"
+      />
+
+      <h5 class="user-jumbotron-content">{{ username }}</h5>
+    </div>
+  </div>
+</div>

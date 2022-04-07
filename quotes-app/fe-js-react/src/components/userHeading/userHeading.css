@@ -1,0 +1,26 @@
+.logo {
+	color: #5cb85c;
+}
+
+.user-jumbotron {
+	text-align: center;
+	background: #f3f3f3;
+	padding: 1rem 0 1rem;
+}
+
+.user-content {
+	padding: 1%;
+	text-align: center;
+}
+
+.user-jumbotron-content {
+	font-size: 1.4em;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.user-jumbotron .user-content .user-img {
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+	margin-bottom: 1rem;
+}

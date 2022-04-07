@@ -1,0 +1,15 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": "5400",
+  "username": "postgres",
+  "password": "RB123456#",
+  "database": "quotes_management",
+  "synchronize": false,
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "migrations": ["dist/migration/*{.ts,.js}"],
+  "migrationsTableName": "migrations_typeorm",
+  "cli": {
+    "migrationsDir": "migration"
+  }
+}

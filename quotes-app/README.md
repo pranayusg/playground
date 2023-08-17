@@ -1,6 +1,6 @@
-## Quotes-app
+# Quotes-app
 
-# Tasks
+## Tasks
 - CRUD operations on Quotes
 - User authentication
 - Like/dislike quotes

@@ -1,9 +1,9 @@
 {
   "type": "postgres",
-  "host": "localhost",
-  "port": "5434",
-  "username": "postgres",
-  "password": "RB123456#",
+  "host": "DB_HOST",
+  "port": "DB_PORT",
+  "username": "DB_USERNAME",
+  "password": "DB_PASSWORD",
   "database": "quotes_management",
   "synchronize": false,
   "entities": ["dist/**/*.entity{.ts,.js}"],

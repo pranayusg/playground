@@ -1,12 +1,7 @@
 import "./cardItem.css";
 import { Card, Tooltip } from "antd";
 import Moment from "react-moment";
-import {
-	EditTwoTone,
-	LikeTwoTone,
-	DislikeTwoTone,
-	DeleteTwoTone,
-} from "@ant-design/icons";
+import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import Avatar from "antd/lib/avatar/avatar";
 import { auth } from "../../utils/authHelpers";
@@ -19,7 +14,7 @@ import {
 } from "../../apis/protectedRoutes";
 import { EditModal } from "../modals/editQuote";
 import { helpers } from "../../utils/generalHelpers";
-import { EditQuoteDetailed, QuoteDetailed, User } from "../../interfaces/types";
+import { EditQuoteDetailed, QuoteDetailed } from "../../interfaces/types";
 
 const swalProps = {
 	title: "Are you sure you want to delete this quote ?",

@@ -1,0 +1,1 @@
+Route guard for login/signup to check token from sessionstorage

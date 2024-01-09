@@ -1,4 +1,4 @@
-import { Summary } from "./summaryInterface";
+import { Summary } from './summaryInterface';
 
 export interface JobDetails {
 	jobId: string;
@@ -8,6 +8,7 @@ export interface JobDetails {
 	summary: Summary[];
 	jobType: string;
 	importType: string;
+	errorFileLink: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

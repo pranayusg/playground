@@ -21,15 +21,19 @@ const Sort = (props: SortProps) => {
 				/> */}
 			</div>
 			<select
-				className="select select-primary max-w-xs"
+				className="select select-bordered max-w-xs"
 				onChange={(e: any) => onSortClick(e.target.value)}
 				defaultValue={props.defaultValue}
 			>
-				{props.defaultOption ? (
+				{/* {props.defaultOption ? (
 					<option selected>{props.defaultOption}</option>
-				) : null}
+				) : null} */}
 				{props.options.map((option: string, index: number) => (
-					<option key={index} value={option}>
+					<option
+						selected={props.defaultValue === option ? true : false}
+						key={index}
+						value={option}
+					>
 						{option}
 					</option>
 				))}

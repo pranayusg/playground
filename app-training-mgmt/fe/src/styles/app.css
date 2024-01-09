@@ -1,0 +1,85 @@
+table {
+	line-height: 0.9rem !important;
+}
+
+tbody {
+	font-size: 0.75rem;
+}
+
+.table-heading {
+	font-weight: 600;
+	background: #fafafa;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.content-height {
+	height: calc(100vh - 3.9rem);
+}
+
+.content-width {
+	width: calc(100vw - 8rem);
+}
+
+.pagination-active {
+	font-weight: 600 !important;
+	background-color: #ffffff !important;
+	border-color: #1677ff !important;
+}
+
+.page-item {
+	display: inline-block;
+	min-width: 28px;
+	height: 32px;
+	margin-inline-end: 2px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	line-height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	list-style: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 6px;
+	outline: 0;
+	cursor: pointer;
+	user-select: none;
+}
+
+.overflow-text {
+	max-width: 5px;
+	/* border-color: #ff4516;
+	border-width: 2px; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #b8babd;
+    border-radius: 10px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+.menu li > *:not(ul):not(.menu-title):not(details).active {
+	background: #ffffff;
+	color: black;
+}
+
+.card {
+	z-index: 0;
+}

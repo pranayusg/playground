@@ -1,0 +1,11 @@
+.ag-theme-alpine {
+  --ag-header-foreground-color: #fff;
+  --ag-header-background-color: rgb(91 33 182);
+  --ag-header-cell-hover-background-color: rgb(80, 40, 140);
+  --ag-header-cell-moving-background-color: rgb(80, 40, 140);
+  --ag-odd-row-background-color: rgb(237 233 254);
+  --ag-card-radius: 10px;
+  --ag-row-height: 60px;
+  --ag-header-height: 50px;
+  --ag-font-size: 14px;
+}

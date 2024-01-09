@@ -1,27 +1,36 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
 interface SearchBoxProps {
+	defaultValue: string;
 	placeholder: string;
-	getSearchText: (searchText: string) => void;
+	getDataBySearchText: (searchText: string) => void;
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-	const [searchText, setSearchText] = useState('');
+	// const [searchText, setSearchText] = useState(props.defaultValue);
+	const inputEl = useRef(null);
+
+	// useEffect(() => {
+	// 	setSearchText(props.defaultValue);
+	// }, [props]);
 
 	const onSearch = async () => {
-		props.getSearchText(searchText);
+		props.getDataBySearchText((inputEl.current as any).value);
 	};
 
 	return (
 		<div className="form-control">
 			<div className="input-group">
 				<input
+					key={Math.random() + props.defaultValue}
+					defaultValue={props.defaultValue}
+					ref={inputEl}
 					type="text"
 					placeholder={props.placeholder}
-					className="input input-bordered"
-					onChange={(e: any) => setSearchText(e.target.value)}
+					className="input input-bordered min-w-[250px]"
+				// onChange={(e: any) => setSearchText(e.target.value)}
 				/>
-				<button className="btn btn-square" onClick={() => onSearch()}>
+				<button className="btn btn-square border border-[#1f2937] border-opacity-20 border-l-0" onClick={() => onSearch()}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-6 w-6"

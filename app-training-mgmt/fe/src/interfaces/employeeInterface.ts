@@ -1,0 +1,31 @@
+export interface Employee {
+    employee: string;
+    employeeNumber: string;
+    email: string;
+    doj: Date;
+    reportingTo: string;
+    currGrade: string;
+    currLocation: string;
+    presentCity: string;
+	presentState: string;
+    currDepartment: string;
+    currDesignation: string;
+    currDesForReporting: string;
+    leavingDate: Date;
+    currClient1: string;
+    currClient2: string;
+    currClient3: string;
+	currClient4: string;
+    currExperience: number;
+    currPreviousEmployerExperience: number;
+    yearsServedInCurrDesignation: number;
+    currDesignationSince: Date;
+	currBusinessSystemQualification: string;
+    currCoreTechStack: string;
+    currSecondaryTechStack: string;
+    currManagerialQualification: string;
+    currPresonalInterests: string;
+	employeeStatus: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

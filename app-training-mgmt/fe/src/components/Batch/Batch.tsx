@@ -1,230 +1,326 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { AgGridReact } from 'ag-grid-react';
+
 import { batchService } from '../../services/batchService';
-import { Batch } from '../../interfaces/batchInterface';
 import {
-	BatchStatusSortColumns,
 	BatchTableColumnNames,
-	TOTAL_RECORDS,
+	BatchTableHiddenColumns,
 } from '../../constants/constants';
-import moment from 'moment';
-import Pagination from '../Common/Pagination';
 import Sort from '../Common/Sort';
+import { ExportToExcel } from '../Common/ExportToExcel';
+import { Helper } from '../../utils/helpers';
+import { ShowHideColumns } from '../Common/showHideColumns';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	selectFileName,
+	selectSortColumn,
+	selectSortOrder,
+	selectStatus,
+	selectTech,
+	setFileName,
+	setSortColumn,
+	setSortOrder,
+	setStatus,
+	setTech,
+} from '../../store/features/batchSlice';
+import { selectNoOfRecords } from '../../store/features/globalSlice';
+import { useSearchParams } from 'react-router-dom';
+import { useDocumentTitle } from '../../hooks/setDocumentTitle';
 
 function BatchData() {
 	const defaultTech = 'Select Tech';
 	const defaultStatus = 'Select Status';
-	const [tableData, setTableData] = useState<any>();
-	const [techValues, setTechValues] = useState([]);
-	const [pageNo, setPageNo] = useState<number>(1);
-	const [status, setStatus] = useState<string>('');
-	const [sortBy, setSortBy] = useState<string>('');
-	const [tech, setTech] = useState<string>('');
+	useDocumentTitle('Batches | Training Management');
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [techValues, setTechValues] = useState<string[]>([]);
+	const [statusValues, setStatusValues] = useState<string[]>([]);
 	const [sortBatches, setSortBatches] = useState<any>([]);
+	const [columnDefs, setColumnDefs] = useState<any>([]);
+	const [gridApi, setGridApi] = useState<any>();
+	const [gridColumnApi, setGridColumnApi] = useState<any>();
+	const [hiddenColumns, setHiddenColumns] = useState<any>([]);
+	const [exportData, setExportData] = useState([]);
+	const [errorMsg, setErrorMessage] = useState<string>('');
+	const dateColumns = ['startDate', 'endDate', 'createdAt', 'updatedAt'];
+
+	//Dispatch actions
+	const dispatch = useDispatch<any>();
+	const tech = useSelector(selectTech);
+	const status = useSelector(selectStatus);
+	const fileName = useSelector(selectFileName);
+	const sortColumn = useSelector(selectSortColumn);
+	const sortOrder = useSelector(selectSortOrder);
+	const TOTAL_RECORDS = useSelector(selectNoOfRecords);
 
 	useEffect(() => {
-		getInitialData();
+		getTechValues();
+		getStatusValues();
+		setColumns();
+		formatHiddenColumns();
 
-		const FilteredSortColumns = BatchTableColumnNames.filter(
-			(column) =>
-				column.name !== 'Batch Title' &&
-				column.name !== 'Tech' &&
-				column.name !== 'Status' &&
-				column.name !== 'Is Processed' &&
-				column.name !== 'Updated At'
-		);
-		const FilteredSortColumnsNames = FilteredSortColumns.map(
-			(item) => item.name
-		);
-		setSortBatches(FilteredSortColumnsNames);
+		searchParams.forEach((value, key) => {
+			if (key === 'status') dispatch(setStatus(value));
+			if (key === 'tech') dispatch(setTech(value));
+			if (key === 'sortColumn') dispatch(setSortColumn(value));
+			if (key === 'sortOrder') dispatch(setSortOrder(value));
+		});
 	}, []);
 
-	const getInitialData = async () => {
-		const data = await batchService.getAllBatchesData(1);
-		if (data.records?.length) setTableData(data);
+	useEffect(() => {
+		if (gridApi) {
+			const dataSource = {
+				getRows: (params: any) => {
+					const { filterModel, sortModel } = params;
 
-		const tempTech = await batchService.getTechForBatches();
-		setTechValues(tempTech);
+					const colId =
+						sortModel.length && sortModel[0].colId
+							? sortModel[0].colId
+							: sortColumn;
+					const sort =
+						sortModel.length && sortModel[0].sort
+							? sortModel[0].sort
+							: sortOrder;
+
+					setSearchParams({
+						...(tech !== '' && { tech }),
+						...(status !== '' && { status }),
+						...(colId !== '' && { sortColumn: colId }),
+						...(sort !== '' && { sortOrder: sort }),
+						fileName: Helper.getFileNameBatch(false, colId, sort, tech, status),
+					});
+					dispatch(setSortColumn(colId));
+					dispatch(setSortOrder(sort));
+
+					const page = params.endRow / TOTAL_RECORDS;
+					let techFilter = '';
+					let statusFilter = '';
+					const filterKeys = Object.keys(filterModel);
+					filterKeys.forEach((fil) => {
+						techFilter += fil === 'tech' ? `${filterModel[fil].filter}` : '';
+						statusFilter +=
+							fil === 'status' ? `${filterModel[fil].filter}` : '';
+					});
+
+					getData(
+						page || 1,
+						sortModel.length && sortModel[0].colId,
+						statusFilter || status,
+						techFilter || tech,
+						sortModel.length && sortModel[0].sort
+					).then((data) => {
+						gridApi.hideOverlay();
+						params.successCallback(data.records, data.totalRecords);
+						if (data.records && !data.records.length) {
+							gridApi.showNoRowsOverlay();
+						}
+					});
+				},
+			};
+			gridApi.setDatasource(dataSource);
+		}
+	}, [gridApi, status, tech, TOTAL_RECORDS]);
+
+	const onGridReady = (params: any) => {
+		setGridColumnApi(params.columnApi);
+		setGridApi(params.api);
 	};
 
-	const handlePageClick = async (event: any) => {
-		if (status !== defaultStatus || sortBy !== '' || tech !== defaultTech) {
-			const data = await batchService.getAllBatchesDataForSort(
-				event.selected + 1,
-				sortBy,
-				status,
-				tech
+	const setColumns = () => {
+		const columns: any = [];
+		const sortableColumns = BatchTableColumnNames.filter(
+			(column) =>
+				column !== 'batchTitle' &&
+				column !== 'tech' &&
+				column !== 'status' &&
+				column !== 'isProcessed' &&
+				column !== 'updatedAt'
+		).map((item) => item);
+		setSortBatches(sortableColumns);
+		BatchTableColumnNames.forEach((col) => {
+			columns.push({
+				field: col,
+				headerName: Helper.formatColumnNames(col),
+				sortable: sortableColumns.includes(col),
+				tooltipField: col,
+				hide: BatchTableHiddenColumns.includes(col),
+			});
+		});
+		setColumnDefs(columns);
+	};
+
+	const onShowHiddenColumns = useCallback(
+		(
+			gridColumnApi: any,
+			target: any,
+			item: any,
+			hiddenColumns: any,
+			gridApi: any
+		) => {
+			const data = Helper.showHideGridColumns(
+				gridColumnApi,
+				target,
+				item,
+				hiddenColumns,
+				gridApi
 			);
-			setPageNo(event.selected + 1);
-			if (data.records?.length) setTableData(data);
-		} else {
-			const data = await batchService.getAllBatchesData(event.selected + 1);
-			setPageNo(event.selected + 1);
-			if (data.records?.length) setTableData(data);
-		}
+			setErrorMessage('');
+			if (data.errorMsg) {
+				setErrorMessage(data.errorMsg);
+			} else {
+				setHiddenColumns([...data]);
+			}
+			gridApi.sizeColumnsToFit();
+		},
+		[]
+	);
+
+	const resetHiddenColumns = useCallback(
+		(gridColumnApi: any, hiddenColumns: any, gridApi: any) => {
+			const data = Helper.resetShowHideColumns(
+				gridColumnApi,
+				hiddenColumns,
+				BatchTableHiddenColumns
+			);
+			setErrorMessage('');
+			setHiddenColumns([...data]);
+			gridApi.sizeColumnsToFit();
+		},
+		[]
+	);
+
+	const formatHiddenColumns = () => {
+		const formatedColumns = BatchTableColumnNames.map((col: any, key) => {
+			return {
+				id: key,
+				name: col,
+				checked: !BatchTableHiddenColumns.includes(col),
+				dispayName: Helper.formatColumnNames(col),
+			};
+		});
+		setHiddenColumns(formatedColumns);
 	};
 
-	const getSortedData = async (sortBy: string) => {
-		const sortBatch = BatchTableColumnNames.find(
-			(batch: any) => batch.name === sortBy
-		);
-
-		if (sortBatch) {
-			const mappedSortBy = sortBatch.value;
-			setSortBy(mappedSortBy);
-			callAPIWithSorting(pageNo, mappedSortBy, status, tech);
-		} else {
-			console.error('Invalid sortBy value:', sortBy);
-		}
+	const getTechValues = async () => {
+		const tempTech = await batchService.getTechForBatches('raw-data', false);
+		setTechValues([defaultTech].concat(tempTech));
 	};
 
-	const getSortedDataForStatus = async (status: string) => {
-		if (status === defaultStatus) {
-			setStatus('');
-			setPageNo(1);
-			callAPIWithSorting(1, sortBy, '', tech);
-		} else {
-			setStatus(status);
-			setPageNo(1);
-			callAPIWithSorting(1, sortBy, status, tech);
-		}
+	const getStatusValues = async () => {
+		const tempStatus = await batchService.getStatusForBatches('raw-data');
+		setStatusValues([defaultStatus].concat(tempStatus));
 	};
 
-	const getSortedTech = async (tech: string) => {
-		if (tech === defaultTech) {
-			setTech('');
-			setPageNo(1);
-			callAPIWithSorting(1, sortBy, status, '');
-		} else {
-			setTech(tech);
-			setPageNo(1);
-			callAPIWithSorting(1, sortBy, status, tech);
-		}
-	};
-
-	const callAPIWithSorting = async (
+	const getData = async (
 		page: number,
-		sort: string,
-		stat: string,
-		tech: string
+		sortOption: string,
+		status: string,
+		tech: string,
+		order: string
 	) => {
-		const data = await batchService.getAllBatchesDataForSort(
-			page,
-			sort,
-			stat,
-			tech
+		let data = await batchService.getAllBatchesDataForSort(
+			'raw-data',
+			page || 1,
+			sortOption,
+			status,
+			tech,
+			order
 		);
-		setTableData(data);
-	};
-	return (
-		<div className="m-4">
-			<div className="flex justify-end space-x-4 mb-4">
-				<div>
-					<img
-						src="/filter.png"
-						alt="filter"
-						style={{ height: '30px', width: '30px' }}
-						className="mr-2 mt-2"
-					/>
-				</div>
 
-				<div>
-					{sortBatches.length ? (
-						<Sort
-							options={sortBatches}
-							getSortedData={getSortedData}
-							defaultValue="Created At"
+		if (data.records?.length)
+			data = Helper.formatDateColumns(data, dateColumns);
+
+		let exportData: any = await batchService.getAllBatchesDataForSort(
+			'raw-data',
+			0,
+			sortOption,
+			status,
+			tech,
+			order
+		);
+
+		if (exportData.records?.length) {
+			exportData = Helper.formatDateColumns(exportData, dateColumns);
+			setExportData(exportData.records);
+			dispatch(setFileName({ sortOption, order }));
+		} else {
+			setExportData([]);
+		}
+
+		return data;
+	};
+
+	const setSelectedStatus = async (status: string) => {
+		status === defaultStatus
+			? dispatch(setStatus(''))
+			: dispatch(setStatus(status));
+	};
+
+	const setSelectedTech = async (tech: string) => {
+		tech === defaultTech ? dispatch(setTech('')) : dispatch(setTech(tech));
+	};
+
+	return (
+		<div>
+			<h1 className="font-bold text-3xl my-8 ml-24">Batches</h1>
+			<div className="w-11/12 mx-20 mt-10 card border-solid border-2 p-5 bg-base-100 shadow-xl min-h-[47rem]">
+				<div className="flex justify-end space-x-4 mb-4">
+					<div>
+						<img
+							src="/filter.png"
+							alt="filter"
+							style={{ height: '30px', width: '30px' }}
+							className="mr-2 mt-2"
 						/>
-					) : null}
-				</div>
-				<div>
-					{sortBatches.length ? (
+					</div>
+					<div>
+						{sortBatches.length ? (
+							<Sort
+								options={techValues}
+								getSortedData={setSelectedTech}
+								defaultValue={tech === '' ? defaultTech : tech}
+							/>
+						) : null}
+					</div>
+					<div>
 						<Sort
-							options={techValues}
-							getSortedData={getSortedTech}
-							defaultOption="Select Tech"
+							options={statusValues}
+							getSortedData={setSelectedStatus}
+							defaultValue={status === '' ? defaultStatus : status}
 						/>
-					) : null}
+					</div>
+					<div>
+						<ExportToExcel apiData={exportData} fileName={fileName} />
+					</div>
 				</div>
-				<div>
-					<Sort
-						options={BatchStatusSortColumns}
-						getSortedData={getSortedDataForStatus}
-						defaultOption="Select Status"
+				{hiddenColumns && (
+					<ShowHideColumns
+						hiddenColumns={hiddenColumns}
+						gridColumnApi={gridColumnApi}
+						onShowHiddenColumns={onShowHiddenColumns}
+						resetHiddenColumns={resetHiddenColumns}
+						gridApi={gridApi}
+						errorMsg={errorMsg}
+					/>
+				)}
+				<div
+					className="ag-theme-alpine"
+					style={{
+						width: '100%',
+						height: `${TOTAL_RECORDS > 5 ? '717px' : '420px'}`,
+					}}
+				>
+					<AgGridReact
+						pagination={true}
+						rowModelType={'infinite'}
+						animateRows={true}
+						paginationPageSize={TOTAL_RECORDS}
+						cacheBlockSize={TOTAL_RECORDS}
+						onGridReady={onGridReady}
+						columnDefs={columnDefs}
+						className="text-base"
 					/>
 				</div>
 			</div>
-			{tableData?.records.length ? (
-				<div>
-					<div className="overflow-x-auto">
-						<table className="table bg-white">
-							<thead>
-								<tr>
-									{BatchTableColumnNames.map((object: any, i) => (
-										<th key={i}>{object.name}</th>
-									))}
-								</tr>
-							</thead>
-							<tbody>
-								{tableData.records.map((data: Batch) => (
-									<tr key={data.id} className="hover">
-										<th className="overflow-text" title={data.batchTitle}>
-											{data.batchTitle}
-										</th>
-										<th title={data.tech}>{data.tech}</th>
-										<th
-											title={
-												data.startDate ? moment(data.startDate).format('L') : ''
-											}
-										>
-											{data.startDate ? moment(data.startDate).format('L') : ''}
-										</th>
-										<th
-											title={
-												data.endDate ? moment(data.endDate).format('L') : ''
-											}
-										>
-											{data.endDate ? moment(data.endDate).format('L') : ''}
-										</th>
-										<th title={data.trainingCoordinator}>
-											{data.trainingCoordinator}
-										</th>
-										<th title={`${data.headTrainer}`}>{data.headTrainer}</th>
-										<th title={`${data.NoOfTrainees}`}>{data.NoOfTrainees}</th>
-										<th title={`${data.NoSuccess}`}>{data.NoSuccess}</th>
-										<th title={`${data.NoFailed}`}>{data.NoFailed}</th>
-										<th title={data.status}>{data.status}</th>
-										<th title={`${data.isProcessed}`}>{data.isProcessed}</th>
-										<th
-											title={
-												data.createdAt ? moment(data.createdAt).format('L') : ''
-											}
-										>
-											{data.createdAt ? moment(data.createdAt).format('L') : ''}
-										</th>
-										<th
-											title={
-												data.updatedAt ? moment(data.updatedAt).format('L') : ''
-											}
-										>
-											{data.updatedAt ? moment(data.updatedAt).format('L') : ''}
-										</th>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			) : (
-				<div className="text-center mt-12 text-lg font-bold">
-					No records found!
-				</div>
-			)}
-			{tableData?.records.length && tableData.totalRecords > TOTAL_RECORDS ? (
-				<Pagination
-					totalPages={tableData.totalPages}
-					handlePageClick={handlePageClick}
-				/>
-			) : null}
 		</div>
 	);
 }

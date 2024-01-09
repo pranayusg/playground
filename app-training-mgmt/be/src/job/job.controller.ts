@@ -1,7 +1,16 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  UseGuards,
+  VERSION_NEUTRAL,
+} from '@nestjs/common';
 import { JobService } from './job.service';
 import { Job } from './entities/job.entity';
 import {
+  ApiBearerAuth,
+  ApiHeader,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -9,13 +18,43 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { SwaggerConstant } from 'src/core/swagger.constants';
-import { PaginatedResponse } from 'src/core/pagination.interface';
+import { SwaggerConstant } from 'src/core/constant/swagger.constants';
+import { PaginatedResponse } from 'src/core/interface/pagination.interface';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/core/enum/role.enum';
+import {
+  API_VERSION,
+  API_VERSIONING_HEADER,
+} from 'src/core/constant/env.constant';
 
-@ApiTags('Import jobs')
-@Controller('job')
+@Controller({
+  path: 'jobs',
+  version: [API_VERSION, VERSION_NEUTRAL],
+})
+@ApiTags('Jobs')
+@ApiBearerAuth()
+@ApiHeader({
+  name: API_VERSIONING_HEADER,
+})
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.ADMIN)
 export class JobController {
   constructor(private jobService: JobService) {}
+
+  @ApiOperation({
+    description:
+      'This will check if any job with status "New" is present in import_summary table and will process that file. (This function will automaticaly run via a Cron job)',
+  })
+  @ApiOkResponse({ description: SwaggerConstant.OkRes })
+  @ApiInternalServerErrorResponse({
+    description: SwaggerConstant.InternalServerErrorRes,
+  })
+  @Get('/process-new-job')
+  checkForFile() {
+    return this.jobService.checkFiles();
+  }
 
   @ApiOperation({ description: 'Get all the imported jobs.' })
   @ApiOkResponse({ description: SwaggerConstant.OkRes })
@@ -32,9 +71,9 @@ export class JobController {
     required: false,
     description: 'Set the no. of rows needs to be displayed.',
   })
-  @Get('/:pageNo')
+  @Get()
   getAllSummaries(
-    @Param('pageNo') pageNo: number,
+    @Query('pageNo') pageNo: number,
     @Query('status') status: string,
     @Query('noOfRecords') noOfRecords: number,
   ): Promise<PaginatedResponse> {
@@ -52,19 +91,5 @@ export class JobController {
   @Get('/:jobId')
   getSingleJob(@Param('jobId') jobId: string): Promise<Job> {
     return this.jobService.getSingleJob(jobId);
-  }
-
-  @ApiTags('Process data')
-  @ApiOperation({
-    description:
-      'This will check if any job with status "New" is present in import_summary table and will process that file. (This function will automaticaly run via a Cron job)',
-  })
-  @ApiOkResponse({ description: SwaggerConstant.OkRes })
-  @ApiInternalServerErrorResponse({
-    description: SwaggerConstant.InternalServerErrorRes,
-  })
-  @Get('/process-new-job')
-  checkForFile() {
-    return this.jobService.checkFiles();
   }
 }

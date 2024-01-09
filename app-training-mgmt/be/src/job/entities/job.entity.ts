@@ -1,17 +1,9 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { SummaryDto } from '../dto/summary.dto';
+import { AuditingEntity } from 'src/core/entities/auditing.entity';
 
 @Entity()
-export class Job {
-  @PrimaryGeneratedColumn('uuid', { name: 'job_id' })
-  jobId: string;
-
+export class Job extends AuditingEntity {
   @Column({ name: 'file_name' })
   fileName: string;
 
@@ -30,9 +22,6 @@ export class Job {
   @Column({ name: 'import_type', nullable: true })
   importType: string;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @Column({ name: 'error_file_link', nullable: true })
+  errorFileLink: string;
 }

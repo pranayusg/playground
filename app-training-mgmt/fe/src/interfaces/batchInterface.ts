@@ -6,9 +6,9 @@ export interface Batch {
 	endDate: Date | null;
 	trainingCoordinator: string;
 	headTrainer: string;
-	NoOfTrainees: number | null;
-	NoSuccess: number | null;
-	NoFailed: number | null;
+	noOfTrainees: number | null;
+	noSuccess: number | null;
+	noFailed: number | null;
 	status: string;
 	isProcessed: boolean;
 	createdAt: Date;

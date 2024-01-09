@@ -1,18 +1,32 @@
-import 'dotenv/config';
-import { DataSourceOptions } from 'typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+  TypeOrmModuleAsyncOptions,
+  TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
+import databaseConfig from './ormconfig';
 
-const databaseConfig: DataSourceOptions = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 5434,
-  username: 'postgres',
-  password: 'RB123456#',
-  database: 'training-management-app',
-  entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-  synchronize: false,
-  logging: true,
-  migrationsRun: true,
+export const typeOrmConfig: TypeOrmModuleOptions = databaseConfig;
+
+export const databaseAsyncConfig: TypeOrmModuleAsyncOptions = {
+  imports: [ConfigModule],
+  inject: [ConfigService],
+  useFactory: async (
+    configService: ConfigService,
+  ): Promise<TypeOrmModuleOptions> => {
+    const isDev = process.env.STAGE === 'dev' ? true : false;
+
+    return {
+      type: 'postgres',
+      host: configService.get('DB_HOST'),
+      port: configService.get('DB_PORT'),
+      username: configService.get('DB_USERNAME'),
+      password: configService.get('DB_PASSWORD'),
+      database: configService.get('DB_DATABASE'),
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+      migrationsRun: true,
+      logging: isDev,
+      synchronize: false,
+    };
+  },
 };
-
-export default databaseConfig;
